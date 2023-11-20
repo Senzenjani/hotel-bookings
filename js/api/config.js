@@ -1,7 +1,7 @@
 export function getConfigs() {
     let configs = {}
     $.ajax({
-        url: "build/config/config.json",
+        url: "config/config.json",
         type: "post",
         dataType: "json",
         async: false,
