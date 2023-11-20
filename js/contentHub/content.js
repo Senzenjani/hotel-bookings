@@ -1,10 +1,10 @@
 export const content_view = [
     //Clients
     {
-      title: "title",
-      state: "state",
-      link: "link",
-      modals: ["views/modals/user.html"]
+      title: "Admin Dashboard",
+      state: "admin_dashboard",
+      link: "views/dashboards/admin.html",
+      modals: [""]
     },
   ];
   
