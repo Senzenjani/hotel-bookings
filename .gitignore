@@ -1,0 +1,2 @@
+# Ignore configuration fil for accessing backend
+config/config.json

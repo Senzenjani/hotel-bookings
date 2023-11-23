@@ -13,7 +13,7 @@ export function loadContent(containerId, newState, urlPath) {
   
         /*$("#pageTitle").text("");
   
-        $("#pageTitle").text(title);*/
+        ("#pageTitle").text(title);*/
         if (newState != "") localStorage.setItem("state", newState);
       },
       error: function () {
