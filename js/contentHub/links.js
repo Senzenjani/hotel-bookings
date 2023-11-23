@@ -1,6 +1,7 @@
 export const links = [
     {
-        role: "roleType",
+        role: "admin",
         link: "views/links/somelink.html"
     },
+
 ]
