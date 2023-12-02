@@ -1,0 +1,184 @@
+<div class="modal fade" id="modal-edit-user">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="addUser" action="" method="post"></form>
+      <div class="modal-header">
+        <h4 class="modal-title">Edit User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <input id="userId" type="hidden" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+          <input id="nationalId" type="text" class="form-control" placeholder="National ID">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-card"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input id="username" type="text" name="username" class="form-control" placeholder="Username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-users"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input id="firstname" type="text" name="firstname" class="form-control" placeholder="Firstname">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-users"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input id="lastname" type="text" name="lastname" class="form-control" placeholder="Lastname">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-users"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input id="email" type="text" name="email" class="form-control" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-users"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sel1">User Role:</label>
+          <select class="form-control" id="role" name="role">
+            <option value="admin">admin</option>
+            <option value="health_personel">Health Personnel</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default alt-btn" data-dismiss="modal">Close</button>
+        <button type="button" id="add-user" class="btn btn-primary">Add</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade " id="modal-delete-user">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <form id="addUser" action="" method="post"></form>
+      <div class="modal-header">
+        <h4 class="modal-title">Delete User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <input id="del-user-id" type="hidden" name="del-user-id" class="form-control">
+        </div>
+
+        <p id="del-user-message">Are you sure you want to delete</p>
+
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="del-user-btn" class="btn btn-success">Yes</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal-profile">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="addUser" action="" method="post"></form>
+      <div class="modal-header">
+        <h4 class="modal-title">Settings</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <input id="userId" type="hidden" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+          <input id="profileUsername" type="text" name="username" class="form-control" placeholder="Username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-users"></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="input-group mb-3">
+          <input id="curPassword" type="password" name="password" password="password" class="form-control"
+            placeholder="Current Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group  ">
+          <label id="invalidPassword" class="text-danger"></label>
+        </div>
+
+        <div class="input-group mb-3">
+          <input id="newPassword" type="password" name="password" password="password" class="form-control"
+            placeholder="New Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group  ">
+          <label id="wrongPassword" class="text-danger"></label>
+        </div>
+
+        <div class="input-group mb-3">
+          <input id="confirmPassword" type="password" name="password" password="password" class="form-control"
+            placeholder="Confirm Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group  ">
+          <label id="wrongPasswordMatch" class="text-danger"></label>
+        </div>
+
+
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default alt-btn" data-dismiss="modal">Close</button>
+        <button type="button" id="saveProfile" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

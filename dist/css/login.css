@@ -1,0 +1,23 @@
+HTML {
+    height: 100%;
+}
+
+BODY {
+    min-height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: url("../img/back-to-care.jpg");
+}
+
+
+
+ .login-title {
+    font-size: 1.3em;
+    font-family: sans-serif;
+    color: #fff;
+}
+
+.login-box-msg {
+    color: #000;
+}

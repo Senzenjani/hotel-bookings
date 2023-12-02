@@ -1,0 +1,5 @@
+{
+    "apiURL": "127.0.0.1",
+    "apiPort": "3002",
+    "apiProtocol": "http"
+}

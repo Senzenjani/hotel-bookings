@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal-case">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="facilityForm" action="" method="post">
+                <div class="modal-header">
+                    <h4 id="caseModalTitle" class="modal-title">Case Status Update</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="content">
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                                <input id="caseId" type="hidden" class="form-control">
+                                <div class="form-group ">
+                                    <label>Case Statuses</label>
+
+                                    <div class="select2-primary">
+                                        <select id="statusName" name="statusName" class="form-control"
+                                            data-placeholder="Select case status" data-dropdown-css-class="select2-primary"
+                                            style="width: 100%;">
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="deceased">Deceased</option>
+                                            <option value="recovered">Recovered</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default alt-btn" data-dismiss="modal">Close</button>
+                    <button type="button" id="updateCaseBtn" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+     $('#statusName').select2();
+</script>

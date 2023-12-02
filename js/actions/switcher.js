@@ -1,64 +1,56 @@
-import { loadContent } from "../contentHub/contentLoader.js";
-import { content_view } from "../contentHub/content.js";
-import { links } from "../contentHub/links.js";
 
-let user_role = sessionStorage.getItem("role");
+import { content_view } from "../app-views/content.js";
+import { links } from "../app-views/links.js";
+import { loadContent } from "../actions/contentLoader.js";
+import * as users from "../services/users.js";
+import * as facility from "../services/facility.js";
+import * as client from "../services/client.js";
+import * as cases  from "../services/case.js";
+import * as map  from "../actions/map.js";
+import * as tabular_stat  from "../actions/tabular_stats.js";
+import * as dashboard  from "../actions/dashboard.js";
 
-const mainContent = "mainContainer";
+const mainContent = "mainContent";
 const modalContent = "modalContent";
 
 selectContent(localStorage.getItem("state"));
 
 $(document).ready(function () {
-
-    //Loads links according to the
     if (sessionStorage.getItem("role") != null) {
-        loadLinks(user_role);
+        loadLinks(sessionStorage.getItem("role"));
+    } else {
+        loadLinks("common_citizens");
+        localStorage.setItem("state", "map");
+        selectContent("map");
     }
 
-    //The folloing are cases links
+    $("#geospatial-map").on("click", function (e) {
+        selectContent("map");
+    });
+
+    $("#tabular-stats").on("click", function (e) {
+        selectContent("tabular_stats");
+    });
+
     $("#dashboard").on("click", function (e) {
-        selectContent("admin_dashboard");
+        selectContent("dashboard");
     });
 
-    //The following are cases links
-    $("#intrusions").on("click", function (e) {
-        selectContent("intrusions");
+    $("#facilities").on("click", function (e) {
+        selectContent("facilities");
     });
 
-
-    //The following are cases links
-    $("#intrusion-responses").on("click", function (e) {
-        selectContent("intrusion_responses");
-    });
-
-    //The following are cases links
-    $("#network-events").on("click", function (e) {
-        selectContent("network_events");
-    });
-
-    //The following are cases links
-    $("#devices").on("click", function (e) {
-        selectContent("devices");
-    });
-
-    //The following are cases links
-    $("#custodians").on("click", function (e) {
-        selectContent("custodians");
-    });
-
-
-    //The following are cases links
     $("#users").on("click", function (e) {
         selectContent("users");
     });
 
-
-    $("#logout").on("click", function (e) {
-        sessionStorage.clear();
-        window.location = "index.html";
+    $("#clients").on("click", function (e) {
+        selectContent("clients");
     });
 
+    $("#cases").on("click", function (e) {
+        selectContent("cases");
+    });
 });
 
 function loadLinks(user_role) {
@@ -74,37 +66,60 @@ function loadLinks(user_role) {
 }
 
 export function selectContent(state) {
-
     for (let index = 0; index < content_view.length; index++) {
         if (state === content_view[index].state) {
-            loadOtherContent(state, index)
-            break;
+            loadOtherContent(state, index);
         }
     }
 }
 
-
 function loadOtherContent(state, index) {
+    console.log(content_view[index].title);
+    $.when(loadContent(mainContent, state, content_view[index].link,
+        content_view[index].title)).done(
+            function () {
+                if (
+                    content_view[index].modals != null &&
+                    typeof content_view[index].modals != undefined
+                ) {
 
-    $.when(loadContent(mainContent, state, content_view[index].link)).done(
-        function () {
-            if (
-                content_view[index].modals != null &&
-                typeof content_view[index].modals != undefined
-            ) {
+                    $(`#${modalContent}`).html("");
 
-                $(`#${modalContent}`).html("");
+                    $.each(content_view[index].modals, function (key, modal_path) {
+                        $.when(loadContent(modalContent, "", modal_path)).done(
+                            function () { }
+                        );
+                    });
 
-                $.each(content_view[index].modals, function (key, modal_path) {
-                    $.when(loadContent(modalContent, "", modal_path)).done(
-                        function () { }
-                    );
-                });
+                }
+                let user_id = sessionStorage.getItem("user_id");
 
+                switch (state) {
+                    case "users":
+                        users.loadUsersTable(users.fetchUsers());
+                        break;
+                    case "facilities":
+                        facility.fetchFacilities();
+                        break;
+                    case "clients":
+                        client.fetchAll({facility_id: 
+                            sessionStorage.getItem("facility_id")});
+                        break;
+                    case "cases":
+                        cases.fetchFacilityCases({facility_id: 
+                            sessionStorage.getItem("facility_id")});
+                        break;
+                    case "map":
+                        map.loadMap();
+                        break;
+                    case "dashboard":
+                        dashboard.loadDashboardData();
+                        break;
+                    case "tabular_stats":
+                        tabular_stat.loadMasterTable();
+                        break;
+
+                }
             }
-
-            $("#title").text(content_view[index].title)
-            $("#subtitle").text(content_view[index].subtitle)
-        }
-    );
+        );
 }

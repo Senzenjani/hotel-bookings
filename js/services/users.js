@@ -1,21 +1,47 @@
 import * as validator from "./validator.js";
-import { apiClient } from "../api/apiClient.js";
+import { apiClient } from "./api-client.js";
 
 let token = sessionStorage.getItem("token");
 
-export function add(params) {
-  return apiClient("/api/v1/new_user", "POST", "json", false, false, params);
+export function add(national_id, username, firstname, lastname, email, role) {
+
+  let user_data = {
+    national_id: national_id,
+    username: username,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    role: role,
+  };
+
+  return apiClient("/api/v1/new_user", "POST", "json", false, false, user_data);
 }
 
-export function edit(params) {
-
+export function edit(
+  user_id,
+  national_id,
+  username,
+  firstname,
+  lastname,
+  email,
+  role
+) {
+  let user_data = {
+    user_id: user_id,
+    national_id: national_id,
+    username: username,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    role: role,
+  };
   return apiClient(
     "/api/v1/edit_user",
     "POST",
     "json",
     false,
     false,
-    params
+    user_data
   );
 }
 
@@ -28,14 +54,16 @@ export function login(formData) {
       sessionStorage.setItem("user_id", data.user_id)
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("username", data.username);
+      
+      if (data.facility != null) {
+        sessionStorage.setItem("facility_id", data.facility.facility_id);
+        sessionStorage.setItem("facility_name", data.facility.name);
+      }
+
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("role", data.role);
-
-      if (data.role === "admin") {
-        localStorage.setItem("state", "admin_dashboard");
-      }
-     
-      window.location = "smartnet.html";
+      localStorage.setItem("state", "map");
+      window.location = "index.html";
     } else {
       //Display an error here
     }
@@ -54,24 +82,21 @@ export function updateProfile(params) {
     params);
 }
 
-export function delete_user(params) {
-  return apiClient("/api/v1/delete_user", "POST", "json", false, false, 
-    params,
-  );
+export function delete_user(user_id) {
+  return apiClient("/api/v1/delete_user", "POST", "json", false, false, {
+    user_id: user_id,
+  });
 }
 
 export function fetchUsers() {
- 
-  let data = apiClient("/api/v1/users", "GET", "json", false, false, {});
-
-  if (data != null) {
-    loadUsersTable(data);
-  }
-
-  return data;
+  return apiClient("/api/v1/users", "GET", "json", false, false, {});
 }
 
-function loadUsersTable(dataset) {
+export function unassignedUsers() {
+  return apiClient("/api/v1/unassigned_users", "GET", "json", false, false, {});
+}
+
+export function loadUsersTable(dataset) {
   $("#usersTable").DataTable({
     destroy: true,
     responsive: true,
@@ -117,7 +142,7 @@ function getDelButton(data, type, row, meta) {
 
 function getEditButton(data, type, row, meta) {
   return `<button  type="button"  class="btn btn-block btn-default"
-    data-toggle="modal" data-target = "#modal-register-user"
+    data-toggle="modal" data-target = "#modal-edit-user"
     data-user-id = "${data.id}"
     data-national-id = "${data.national_id}"
     data-username = "${data.username}"

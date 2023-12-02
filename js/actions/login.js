@@ -14,4 +14,12 @@ $(document).ready(function () {
         user.login(formData );
     });
 
+    $("#monit-home").on("click", function (e) {
+        $.when(sessionStorage.clear(), localStorage.clear()).done(function () {
+          window.location.href = "index.html";
+        });
+    });
+
+    
+
 });

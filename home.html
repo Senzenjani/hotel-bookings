@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Net</title>
+
+  <script>
+    var token = sessionStorage.getItem("token");
+  </script>
+
+  <style>
+    .overlay {
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      background: rgba(189, 189, 189, 0.8) url("dist/img/loader.gif") center no-repeat;
+    }
+
+    /* Turn off scrollbar when body element has the loading class */
+    body.loading {
+      overflow: hidden;
+    }
+
+    /* Make spinner image visible when body element has the loading class */
+    body.loading .overlay {
+      display: block;
+    }
+
+    .active {
+      background: rgb(219, 219, 219) !important;
+    }
+
+    #map {
+      height: 100vh;
+    }
+
+    .side-bar-h {
+      font-size: 11pt;
+    }
+
+    .custom-icon {
+      background-color: rgba(65, 81, 61, 0.7);
+      /* Use rgba() with the desired transparency value */
+      /* Customize the marker color */
+      border-radius: 10%;
+      /* Make the marker circular */
+    }
+
+    .custom-icon .icon-wrapper {
+      padding: 10px;
+    }
+
+    .custom-icon .icon-label {
+      display: block;
+      font-size: 12px;
+      /* Adjust the font size as desired */
+      color: #ffffff;
+      /* Customize the text color */
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      /* Add text shadow for better visibility */
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+  <!-- overlayScrollbars -->
+
+  <!-- Date range picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css" />
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
+
+  <link rel="stylesheet" href="plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.css" />
+
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" />
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="plugins/bs-stepper/css/bs-stepper.min.css" />
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="plugins/dropzone/min/dropzone.min.css" />
+  <link rel="stylesheet" href="plugins/select2/css/select2.min.css" />
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="dist/css/custom.css" />
+
+</head>
+
+<body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse">
+  <div class="overlay"></div>
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-light navbar-expand ">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-dark" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" id="facility" class="nav-link text-dark text-bold"></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a id="login-link" class="nav-link text-sm " href="#">
+              <i class="fas fa-lock "></i> Login
+            </a>
+          </li>
+          <li id="my-profile-dropdown" class="nav-item dropdown d-none">
+            <a class="nav-link  text-sm" data-toggle="dropdown" href="#">
+              <i class="fas fa-user "></i> My Profile
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
+              <span class="dropdown-item dropdown-header">Username</span>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-divider"></div>
+              <a id="lbl-username" href="#" class="dropdown-item text-dark">
+                <i class="fas fa-user"></i>
+                <span class="float-right text-muted text-sm"></span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" id="settings-link" class="dropdown-item" href="#">
+                <i class="fas fa-cog mr-2"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" data-widget="fullscreen" href="#">
+                <i class="fas fa-expand-arrows-alt mr-2"></i> Fullscreen
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="logout-link">
+                <i class="fas fa-lock mr-2"></i> Logout
+                <span class="float-right text-muted text-sm"></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-light-secondary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link">
+        <img src="dist/img/cholera.png" alt="AdminLTE Logo" class="brand-image img-thumbnail elevation-3 mt-1"
+          style="opacity: 0.8" />
+        <span class="brand-text side-bar-h mt-2 font-weight-bold">Smart Net </span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"
+            id="sidebarLinks">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="pageTitle" class="m-0"></h1>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section id="mainContent" class="content"></section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+
+    <div id="modalContent"></div>
+
+    <footer class="main-footer">
+      <strong>Final Project<a href="https://adminlte.io"></a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.js"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+
+  <!-- DataTables  & Plugins -->
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="plugins/raphael/raphael.min.js"></script>
+  <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <!-- InputMask -->
+  <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/inputmask/jquery.inputmask.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <!-- BS-Stepper -->
+  <script src="plugins/bs-stepper/js/bs-stepper.min.js"></script>
+  <!-- dropzonejs -->
+  <script src="plugins/dropzone/min/dropzone.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+  <!--Apex Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- Select2 -->
+  <script src="plugins/select2/js/select2.full.min.js"></script>
+  <script src="dist/js/modernizr.2.7.1.js"></script>
+  <script src="js/actions/main.js" type="module"></script>
+  <script src="js/services/users.js" type="module"></script>
+  <script src="js/services/api-client.js" type="module"></script>
+  <script src="js/actions/user_management.js" type="module"></script>
+  <script src="js/actions/client.js" type="module"></script>
+  <script src="js/actions/dashboard.js" type="module"></script>
+
+
+  <script>
+   
+  </script>
+
+
+</body>
+
+</html>
