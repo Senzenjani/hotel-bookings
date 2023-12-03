@@ -7,7 +7,9 @@
   <title>Smart Net</title>
 
   <script>
-    var token = sessionStorage.getItem("token");
+    if (sessionStorage.getItem("token") === null) {
+      window.location = "index.html";
+    }
   </script>
 
   <style>
@@ -129,12 +131,7 @@
       <ul class="navbar-nav ml-auto">
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a id="login-link" class="nav-link text-sm " href="#">
-              <i class="fas fa-lock "></i> Login
-            </a>
-          </li>
-          <li id="my-profile-dropdown" class="nav-item dropdown d-none">
+          <li id="my-profile-dropdown" class="nav-item dropdown ">
             <a class="nav-link  text-sm" data-toggle="dropdown" href="#">
               <i class="fas fa-user "></i> My Profile
             </a>
@@ -237,8 +234,8 @@
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+ 
+  <!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->
@@ -284,7 +281,7 @@
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
   <!--Apex Charts -->
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
 
   <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
@@ -296,7 +293,6 @@
   <script src="js/services/users.js" type="module"></script>
   <script src="js/services/api-client.js" type="module"></script>
   <script src="js/actions/user_management.js" type="module"></script>
-  <script src="js/actions/client.js" type="module"></script>
   <script src="js/actions/dashboard.js" type="module"></script>
 
 

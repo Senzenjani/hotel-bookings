@@ -1,53 +1,50 @@
 export const content_view = [
   {
-    title: "User-dashboard",
-    state: "user_dashbaord",
-    links: [
-      "views/dashboards/admin.html",
-      "views/dashboards/health-personel.html",
-    ],
-    modals: ["views/modals/user.html"]
-  },
-  {
-    title: "Map",
-    state: "map",
-    link:  "views/map-view.html",
-    modals: ["views/modals/user.html"]
-  },
-  {
-    title: "Overall Dashboard",
+    title: "dashboard",
     state: "dashboard",
     link:  "views/dashboard.html",
     modals: ["views/modals/user.html"]
   },
   {
-    title: "Tabular Stats",
-    state: "tabular_stats",
-    link:  "views/tabular-stats.html",
+    title: "Response Actions",
+    state: "response_actions",
+    link:  "views/response-actions.html",
+    modals: ["views/modal/response-actions.html"]
+  },
+  {
+    title: "Intrusions",
+    state: "intrusions",
+    link:  "views/intrusions.html",
     modals: ["views/modals/user.html"]
   },
   {
-    title: "Facilities",
-    state: "facilities",
-    link:  "views/user-management/facilities.html",
-    modals: ["views/modals/facility.html"]
+    title: "Network Events",
+    state: "network_events",
+    link:  "views/network-events.html",
+    modals: ["views/modals/network-events.html"]
+  },
+  {
+    title: "Events",
+    state: "events",
+    link:  "views/events.html",
+    modals: ["views/modals/events.html"]
+  },
+  {
+    title: "Devices",
+    state: "devices",
+    link:  "views/devices.html",
+    modals: ["views/modals/devices.html"]
+  },
+  {
+    title: "Custodians",
+    state: "custodians",
+    link:  "views/custodians.html",
+    modals: ["views/modals/custodians.html"]
   },
   {
     title: "Users",
     state: "users",
     link:  "views/user-management/users.html",
     modals: ["views/modals/user.html"]
-  },
-  {
-    title: "Clients",
-    state: "clients",
-    link:  "views/case-management/clients.html",
-    modals: ["views/modals/clients.html"]
-  },
-  {
-    title: "Cases",
-    state: "cases",
-    link:  "views/case-management/cases.html",
-    modals: ["views/modals/cases.html"]
   }
 ];

@@ -55,15 +55,10 @@ export function login(formData) {
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("username", data.username);
       
-      if (data.facility != null) {
-        sessionStorage.setItem("facility_id", data.facility.facility_id);
-        sessionStorage.setItem("facility_name", data.facility.name);
-      }
-
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("role", data.role);
-      localStorage.setItem("state", "map");
-      window.location = "index.html";
+      localStorage.setItem("state", "dashboard");
+      window.location = "smartnet.html";
     } else {
       //Display an error here
     }

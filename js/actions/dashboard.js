@@ -1,4 +1,4 @@
-import { fetchDashboardData } from "../services/map.js";
+
 import { districtChartOptions } from "../services/chartsOptions/stackedChart.js"
 
 let nf = new Intl.NumberFormat('en-US');
@@ -9,9 +9,9 @@ $(function () {
 });
 
 export function loadDashboardData() {
-    $.when(fetchDashboardData()).done(function (data) {
+    /*$.when(fetchDashboardData()).done(function (data) {
         populateDistrictCases(data);
-    });
+    });*/
 }
 
 function populateDistrictCases(data) {
