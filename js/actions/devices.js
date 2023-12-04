@@ -16,13 +16,33 @@ $(function () {
                 $(deviceModal).find(`[id = '${key}']`).val(value);
             });
         } else {
+            $.each(opener.dataset, function (key, value) {
+                $(deviceModal).find(`[id = '${key}']`).val(value);
+            });
             $(deviceModal).find(`[id = 'deviceModalTitle']`).text("Add Device");
         }
     });
 
     $(document).on("click", "#saveDeviceBtn", function () {
-        let deviceParams = getDeviceParams();
-        saveDevice(deviceParams)
+        let id  = $("#deviceId").val();
+        let custodianId = $("#custodianDeviceId").val();
+        let serialNumber = $("#serialNumber").val();
+        let ipAddress = $("#ipAddress").val();
+        let name = $("#deviceName").val();
+        let deviceType = $("#deviceType").val();
+        let macAddress = $("#macAddress").val();
+    
+        let params = {
+            id: id,
+            custodian_id: custodianId,
+            serial_number: serialNumber,
+            ip_address: ipAddress,
+            name: name,
+            device_type: deviceType,
+            mac_address: macAddress
+        };
+    
+        saveDevice(params)
     });
 });
 
@@ -70,23 +90,6 @@ function saveDevice(params){
 
 
 function getDeviceParams() {
-    let id  = $("#deviceId").val();
-    let custodianId = $("#custodianId").val();
-    let serialNumber = $("#serialNumber").val();
-    let ipAddress = $("#ipAddress").val();
-    let name = $("#name").val();
-    let deviceType = $("#deviceType").val();
-    let macAddress = $("#macAddress").val();
-
-    let params = {
-        id: id,
-        custodian_id: custodianId,
-        serial_number: serialNumber,
-        ip_address: ipAddress,
-        name: name,
-        device_type: deviceType,
-        mac_address: macAddress
-    };
 
     return params;
 }
@@ -96,7 +99,7 @@ function clearDeviceFields() {
     $("#deviceId").val("");
     $("#serialNumber").val("");
     $("#ipAddress").val("");
-    $("#name").val("");
+    $("#deviceName").val("");
     $("#deviceType").val("").trigger("change"); // Clear and reset select2 dropdown
     $("#macAddress").val("");
 }

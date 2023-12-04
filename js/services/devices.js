@@ -88,10 +88,10 @@ function populateDevicesTable(dataSet) {
 
 function getEditDeviceBtn(data, type, row, metas) {
     let dataFields = `data-device-id="${data.id}"
-                      data-custodian-id="${data.id}"
+                      data-custodian-device-id="${data.custodian_id}"
                       data-serial-number="${data.serial_number}"
                       data-ip-address="${data.ip_address}"
-                      data-name="${data.name}"
+                      data-device-name="${data.name}"
                       data-device-type="${data.device_type}"
                       data-mac-address="${data.mac_address}"
                       data-action-type="edit"`;

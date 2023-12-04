@@ -93,7 +93,7 @@ function populateCustodiansTable(dataSet) {
 
 
 function getAddDeviceBtn(data, type, row, metas) {
-    let dataFields = `data-custodian-id = ${data.id} 
+    let dataFields = `data-custodian-device-id= ${data.id} 
                       data-title = "Edit Collateral Sale"`;
 
     return getButton(dataFields, "device", "success ",
