@@ -5,7 +5,7 @@ import { loadContent } from "../actions/contentLoader.js";
 import * as users from "../services/users.js";
 import * as custodian from "../services/custodian.js";
 import * as device from "../services/devices.js";
-import * as dashboard from "../actions/dashboard.js";
+import * as event from "../services/event.js";
 
 const mainContent = "mainContent";
 const modalContent = "modalContent";
@@ -98,13 +98,15 @@ function loadOtherContent(state, index) {
                         break;
                     case "dashboard":
                         //dashboard.loadDashboardData();
-                        console.log("sdsd");
                         break;
                     case "custodians":
                         custodian.fetchCustodians();
                         break;
                     case "devices":
                         device.fetchDevices();
+                        break;
+                    case "events":
+                        event.fetchEvents();
                         break
                 }
             }
