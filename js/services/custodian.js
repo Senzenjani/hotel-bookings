@@ -1,133 +1,131 @@
-import * as interest from "../services/interests.js";
-import { notify } from "../services/utils.js";
+import { apiClient } from "./api-client.js";
 
-const modalId = "#modal-interest";
-const delModalId = "#modal-del-interest";
-$(function () {
-  $(document).on("show.bs.modal", modalId, function (e) {
-    let opener = e.relatedTarget;
+export function fetchCustodians(...args) {
+    let data = apiClient(
+        "/api/v1/custodians",
+        "GET",
+        "json",
+        false,
+        false,
+        {}
+    )
 
-    if ($(opener).attr("data-action-type") === "edit") {
-      $(modalId).find(`[id = 'interestModalTitle']`).text("Edit Interest");
+    if (args[0] === "load-none")
+        return data
+    else
+        populateCustodiansTable(data);
+}
 
-      $.each(opener.dataset, function (key, value) {
-        $(modalId).find(`[id = '${key}']`).val(value);
-      });
-    } else {
-      $(modalId).find(`[id = 'interestModalTitle']`).text("Add Interest");
-    }
-  });
+export function addCustodian(params) {
+    return apiClient(
+        "/api/v1/custodian/new",
+        "POST",
+        "json",
+        false,
+        false,
+        params
+    )
+}
 
-  $(document).on("show.bs.modal", delModalId, function (e) {
-    $(delModalId)
-      .find(`[id = 'delInterestId']`)
-      .val($(e.relatedTarget).attr("data-del-interest-id"));
-  });
+export function editCustodian(params) {
+    return apiClient(
+        "/api/v1/custodian/edit",
+        "POST",
+        "json",
+        false,
+        false,
+        params
+    )
+}
 
-  $(document).on("click", "#saveInterestBtn", function () {
-    let id = $("#interestId").val();
-    let name = $("#name").val();
-    let max = $("#max").val();
-    let min = $("#min").val();
-    let rate = $("#rate").val();
-    let period = $("#period").val();
-    let accum_amount = $("#accumAmount").val();
-    let grace_period = $("#gracePeriod").val();
-    let accum_days = $("#accumDays").val();
+export function deleteCustodian(params) {
+    return apiClient(
+        "/api/v1/custodian/delete",
+        "POST",
+        "json",
+        false,
+        false,
+        params
+    )
+}
 
-    let params = {
-      interest_id: id,
-      name: name,
-      max: max,
-      min: min,
-      rate: rate,
-      period: period,
-      accum_amount: accum_amount,
-      grace_period: grace_period,
-      accum_days: accum_days,
-    };
+function populateCustodiansTable(dataSet) {
+    $("#custodiansTable").DataTable({
+        destroy: true,
+        responsive: true,
+        searching: true,
+        ordering: true,
+        lengthChange: true,
+        autoWidth: false,
+        info: true,
+        data: dataSet,
+        columns: [
+            { data: "id" },
+            { data: "national_id" },
+            { data: "firstname" },
+            { data: "lastname" },
+            { data: "date_of_birth" },
+            { data: "phone_number" },
+            { data: "custodian_type" },
+            { data: null },
+            { data: null },
+            { data: null }
+        ],
+        columnDefs: [
+            {
+                render: getAddDeviceBtn,
+                data: null,
+                targets: [7],
+            },
+            {
+                render: getEditCustodianBtn,
+                data: null,
+                targets: [8],
+            },
+            {
+                render: getDelCustodianBtn,
+                data: null,
+                targets: [9],
+            },
+        ],
+    });
+}
 
-    if ($("#interestModalTitle").text() === "Edit Interest") {
-      let resp = interest.editInterest(params);
 
-      if (resp.updated) {
-        $.when(
-          notify(
-            "center",
-            "success",
-            "Edit Interest",
-            "Interest updated successfully",
-            false,
-            3000
-          )
-        ).done(function () {
-          $.when(interest.fetchInterests()).done(function () {
-            $(modalId).modal("hide");
-          });
-        });
-      }
-    } else {
-      let resp = interest.addInterest(params);
-      if (resp != null) {
-        $.when(
-          notify(
-            "center",
-            "success",
-            "Add Interest",
-            "Interest added successfully",
-            false,
-            3000
-          )
-        ).done(function () {
-          $.when(interest.fetchInterests()).done(function () {
-            $(modalId).modal("hide");
-          });
-        });
-      }
-      //
-    }
-  });
+function getAddDeviceBtn(data, type, row, metas) {
+    let dataFields = `data-custodian-id = ${data.id} 
+                      data-title = "Edit Collateral Sale"`;
 
-  $(document).on("hide.bs.modal", modalId, function (e) {
-    clearFields();
-  });
+    return getButton(dataFields, "device", "success ",
+        "fas fa-plus");
+}
 
-  $(document).on("click", "#delInterestBtn", function (e) {
-    let id = $("#delInterestId").val();
 
-    deleteNotification(interest.deleteInterest(id));
-  });
+function getEditCustodianBtn(data, type, row, metas) {
 
- 
-});
 
-function deleteNotification(resp) {
-    if (resp.deleted) {
-      $.when(
-        notify(
-          "center",
-          "success",
-          "Delete Interest",
-          "interest has been deleted successfully",
-          false,
-          1500
-        )
-      ).done(function () {
-        $.when(interest.fetchInterests()).done(function () {
-          $(delModalId).modal("hide");
-        });
-      });
-    }
-  }
+    let dataFields = `data-custodian-id = ${data.id}
+                      data-national-id = ${data.national_id}
+                      data-firstname = ${data.firstname}
+                      data-lastname = ${data.lastname}
+                      data-date-of-birth = ${data.date_of_birth}
+                      data-phone-number = ${data.phone_number}
+                      data-action-type = "edit"`;
 
-function clearFields() {
-  $("#interestId").val("");
-  $("#name").val("");
-  $("#max").val("");
-  $("#min").val("");
-  $("#rate").val("");
-  $("#period").val("");
-  $("#accumAmount").val("");
-  $("#gracePeriod").val("");
-  $("#accumDays").val("");
+    return getButton(dataFields, "individual-custodian", "primary ", "fas fa-edit");
+}
+
+
+function getDelCustodianBtn(data, type, row, metas) {
+    let dataFields = `data-id = "${data.id}"
+                      data-action-type = "edit"`;
+
+    return getButton(dataFields, "", "danger delete-investment-package", "fas fa-trash");
+}
+
+
+
+function getButton(dataFields, modal, color, icon) {
+    return `<button type='button' class="btn btn-block btn-${color}" data-toggle="modal" 
+              data-target="#modal-${modal}" ${dataFields} ><i class="${icon}" aria-hidden="true"></i></button>`;
 }

@@ -3,7 +3,9 @@ import { content_view } from "../app-views/content.js";
 import { links } from "../app-views/links.js";
 import { loadContent } from "../actions/contentLoader.js";
 import * as users from "../services/users.js";
-import * as dashboard  from "../actions/dashboard.js";
+import * as custodian from "../services/custodian.js";
+import * as device from "../services/devices.js";
+import * as dashboard from "../actions/dashboard.js";
 
 const mainContent = "mainContent";
 const modalContent = "modalContent";
@@ -98,6 +100,12 @@ function loadOtherContent(state, index) {
                         //dashboard.loadDashboardData();
                         console.log("sdsd");
                         break;
+                    case "custodians":
+                        custodian.fetchCustodians();
+                        break;
+                    case "devices":
+                        device.fetchDevices();
+                        break
                 }
             }
         );

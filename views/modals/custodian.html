@@ -3,7 +3,7 @@
     <div class="modal-content">
       <form id="facilityForm" action="" method="post">
         <div class="modal-header">
-          <h4 id="facilityModalTitle" class="modal-title">Individual</h4>
+          <h4 id="individualModalTitle" class="modal-title">Add Custodian
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -15,26 +15,54 @@
 
               <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
 
-
-                <input id="facilityId" type="hidden" class="form-control">
+                <input id="custodianId" type="hidden" class="form-control">
 
                 <div class="form-group mb-3">
-                  <label>Custoodian </label>
-                  <input id="facilityName" type="text" name="facilityName" class="form-control"
-                    placeholder="Facility Name">
+                  <label>National ID</label>
+                  <input id="nationalId" type="text" name="nationalId" class="form-control" placeholder="National ID">
 
                 </div>
 
-                <div class="form-group ">
-                  <label>Districts</label>
+                <div class="form-group mb-3">
+                  <label>Firstname</label>
+                  <input id="firstname" type="text" name="name" class="form-control" placeholder="Firstname">
 
-                  <div class="select2-primary">
-                    <select id="districtId" name="district" class="form-control" data-placeholder="Select district"
-                      data-dropdown-css-class="select2-primary" style="width: 100%;">
-                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label>Lastname</label>
+                  <input id="lastname" type="text" name="name" class="form-control" placeholder="Lastname">
+
+                </div>
+
+                <div class="form-group mb-3">
+                  <label>Gender:</label>
+                  <select id="gender" name="gender" data-placeholder="Select gender"
+                    data-dropdown-css-class="select2-primary" style="width: 100%;">
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label>Date Of Birth:</label>
+                  <div class="input-group date" id="dateOfBirthPicker" data-target-input="nearest">
+                    <input type="text" id="dateOfBirth" class="form-control datetimepicker-input"
+                      data-target="#dateOfBirthPicker" />
+                    <div class="input-group-append" data-target="#dateOfBirthPicker" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
                   </div>
                 </div>
 
+
+                <div class="form-group mb-3">
+                  <label>Phone Number</label>
+                  <input id="phoneNumber" type="text" name="email" class="form-control" placeholder="Phone Number">
+
+                </div>
+
+              
               </div>
 
 
@@ -44,7 +72,7 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default alt-btn" data-dismiss="modal">Close</button>
-          <button type="button" id="saveFacilityBtn" class="btn btn-primary">Save</button>
+          <button type="button" id="saveIndividualBtn" class="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
@@ -82,20 +110,21 @@
 
                 <div class="form-group mb-3">
                   <label>Email</label>
-                  <input id="email" type="email" name="email" class="form-control" placeholder="Facility Name">
+                  <input id="email" type="email" name="email" class="form-control" placeholder="Email">
 
                 </div>
 
                 <div class="form-group mb-3">
                   <label>Phone Number</label>
-                  <input id="phoneNumber" type="text" name="email" class="form-control" placeholder="Facility Name">
+                  <input id="phoneNumber" type="text" name="email" class="form-control" placeholder="Phone Number">
 
                 </div>
 
                 <div class="form-group ">
                   <label>Description</label>
 
-                  <textarea id="description" type="text" name="description" class="form-control" placeholder="Description"></textarea>
+                  <textarea id="description" type="text" name="description" class="form-control"
+                    placeholder="Description"></textarea>
                 </div>
 
               </div>
@@ -200,5 +229,9 @@
   <!-- /.modal-dialog -->
 </div>
 <script>
+$('#gender').select2();
+$('.date').datetimepicker({
+         format: 'L'
+  });
 
 </script>

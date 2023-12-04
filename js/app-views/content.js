@@ -39,7 +39,7 @@ export const content_view = [
     title: "Custodians",
     state: "custodians",
     link:  "views/custodians.html",
-    modals: ["views/modals/custodian.html"]
+    modals: ["views/modals/custodian.html","views/modals/devices.html"]
   },
   {
     title: "Users",
