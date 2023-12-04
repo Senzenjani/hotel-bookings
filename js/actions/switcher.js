@@ -6,6 +6,7 @@ import * as users from "../services/users.js";
 import * as custodian from "../services/custodian.js";
 import * as device from "../services/devices.js";
 import * as event from "../services/event.js";
+import * as network_event from "../services/network-events.js";
 
 const mainContent = "mainContent";
 const modalContent = "modalContent";
@@ -107,6 +108,9 @@ function loadOtherContent(state, index) {
                         break;
                     case "events":
                         event.fetchEvents();
+                        break;
+                    case "network_events":
+                        network_event.fetchNetworkEvents();
                         break
                 }
             }
