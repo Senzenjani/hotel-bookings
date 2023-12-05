@@ -15,13 +15,13 @@ export const content_view = [
     title: "Intrusions",
     state: "intrusions",
     link:  "views/intrusions.html",
-    modals: ["views/modals/user.html"]
+    modals: ["views/modals/intrusions.html"]
   },
   {
     title: "Network Events",
     state: "network_events",
     link:  "views/network-events.html",
-    modals: ["views/modals/network-events.html"]
+    modals: ["views/modals/network-events.html", "views/modals/intrusions.html"]
   },
   {
     title: "Events",

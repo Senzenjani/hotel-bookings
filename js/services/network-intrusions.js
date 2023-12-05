@@ -1,8 +1,10 @@
 import { apiClient } from "./api-client.js";
 
-export function fetchNetworkEvents(...args) {
+
+
+export function fetchIntrusions(...args) {
     let data = apiClient(
-        "/api/v1/network_events",
+        "/api/v1/intrusions",
         "GET",
         "json",
         false,
@@ -13,12 +15,24 @@ export function fetchNetworkEvents(...args) {
     if (args[0] === "load-none")
         return data
     else
-        populateNetworkEventsTable(data);
+        populateNetworkIntrusionsTable(data);
+}
+
+export function addIntrusion(params) {
+    return apiClient(
+        "/api/v1/intrusions/new",
+        "POST",
+        "json",
+        false,
+        false,
+        params
+    )
 }
 
 
-function populateNetworkEventsTable(dataSet) {
-    $("#networkEventsTable").DataTable({
+
+function populateNetworkIntrusionsTable(dataSet) {
+    $("#networkIntrusionsTable").DataTable({
         destroy: true,
         responsive: true,
         searching: true,
@@ -42,7 +56,7 @@ function populateNetworkEventsTable(dataSet) {
         columnDefs: [
 
             {
-                render: getFlagIntrusionBtn,
+                render: getRecordResponsenBtn,
                 data: null,
                 targets: [9],
             }
@@ -50,11 +64,11 @@ function populateNetworkEventsTable(dataSet) {
     });
 }
 
-function getFlagIntrusionBtn(data, type, row, metas) {
-    let dataFields = `data-intrusion-network-event-id = "${data.network_event_id}"
-    data-action-type = "add"`;
+function getRecordResponsenBtn(data, type, row, metas) {
+    let dataFields = `data-id = "${data.network_event_id}"
+                      data-action-type = "edit"`;
 
-    return getButton(dataFields, "intrusion", "warning", "fas fa-exclamation-triangle");
+    return getButton(dataFields, "intrusion", "warning ", "fas fa-exclamation-triangle");
 }
 
 function getButton(dataFields, modal, color, icon) {
