@@ -1,10 +1,8 @@
 import { apiClient } from "./api-client.js";
 
-
-
-export function fetchIntrusions(...args) {
+export function fetchResponses(...args) {
     let data = apiClient(
-        "/api/v1/intrusions",
+        "/api/v1/responses",
         "GET",
         "json",
         false,
@@ -15,12 +13,12 @@ export function fetchIntrusions(...args) {
     if (args[0] === "load-none")
         return data
     else
-        populateNetworkIntrusionsTable(data);
+        populateResponsesTable(data);
 }
 
-export function addIntrusion(params) {
+export function addResponse(params) {
     return apiClient(
-        "/api/v1/intrusions/new",
+        "/api/v1/response/new",
         "POST",
         "json",
         false,
@@ -30,8 +28,8 @@ export function addIntrusion(params) {
 }
 
 
-function populateNetworkIntrusionsTable(dataSet) {
-    $("#intrusionsTable").DataTable({
+function populateResponsesTable(dataSet) {
+    $("#responsesTable").DataTable({
         destroy: true,
         responsive: true,
         searching: true,
@@ -41,51 +39,30 @@ function populateNetworkIntrusionsTable(dataSet) {
         info: true,
         data: dataSet,
         columns: [
-            { data: "intrusion_id" },
+            { data: "response_id" },
             { data: "device_name" },
             { data: "event_name" },
-            { data: "severity" },
-            { data: "protocol" },
-            { data: "source_ip" },
-            { data: "dest_ip" },
-            { data: "port" },
-            { data: "intrusion_description" },
-            { data: "created_at" },
-            { data: null },
+            { data: "action_type" },
+            { data: "response_description" },
             { data: null }
         ],
         columnDefs: [
-
             {
-                render: getAddResponsenBtn,
+                render: getEditResponseBtn,
                 data: null,
-                targets: [10],
-            },
-
-            {
-                render: getEditIntrusionBtn,
-                data: null,
-                targets: [11],
+                targets: [5],
             }
         ],
     });
 }
 
-function getAddResponsenBtn(data, type, row, metas) {
+function getEditResponseBtn(data, type, row, metas) {
     let dataFields = `data-id = "${data.network_event_id}"
                       data-action-type = "add"`;
 
     return getButton(dataFields, "response", "success ", "fas fa-plus");
 }
 
-
-function getEditIntrusionBtn(data, type, row, metas) {
-    let dataFields = `data-intrusion-id = "${data.intrusion_id}"
-                      data-intrusion-description = "${data.intrusion_description}"
-                      data-action-type = "edit"`;
-
-    return getButton(dataFields, "intrusion", "warning ", "fas fa-edit");
-}
 
 function getButton(dataFields, modal, color, icon) {
     return `<button type='button' class="btn btn-block btn-${color}" data-toggle="modal" 

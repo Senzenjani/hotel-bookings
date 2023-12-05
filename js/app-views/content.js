@@ -8,14 +8,14 @@ export const content_view = [
   {
     title: "Response Actions",
     state: "response_actions",
-    link:  "views/response-actions.html",
-    modals: ["views/modal/response-actions.html"]
+    link:  "views/responses.html",
+    modals: ["views/modal/responses.html"]
   },
   {
     title: "Intrusions",
     state: "intrusions",
     link:  "views/intrusions.html",
-    modals: ["views/modals/intrusions.html"]
+    modals: ["views/modals/intrusions.html","views/modals/responses.html"]
   },
   {
     title: "Network Events",
