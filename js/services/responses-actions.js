@@ -27,6 +27,18 @@ export function addResponse(params) {
     )
 }
 
+export function editResponse(params) {
+    return apiClient(
+        "/api/v1/response/edit",
+        "POST",
+        "json",
+        false,
+        false,
+        params
+    )
+}
+
+
 
 function populateResponsesTable(dataSet) {
     $("#responsesTable").DataTable({
@@ -39,7 +51,7 @@ function populateResponsesTable(dataSet) {
         info: true,
         data: dataSet,
         columns: [
-            { data: "response_id" },
+            { data: "id" },
             { data: "device_name" },
             { data: "event_name" },
             { data: "action_type" },
@@ -57,10 +69,10 @@ function populateResponsesTable(dataSet) {
 }
 
 function getEditResponseBtn(data, type, row, metas) {
-    let dataFields = `data-id = "${data.network_event_id}"
-                      data-action-type = "add"`;
+    let dataFields = `data-response-id = "${data.id}"
+                      data-action-type = "edit"`;
 
-    return getButton(dataFields, "response", "success ", "fas fa-plus");
+    return getButton(dataFields, "response", "success ", "fas fa-edit");
 }
 
 

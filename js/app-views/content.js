@@ -9,7 +9,7 @@ export const content_view = [
     title: "Response Actions",
     state: "response_actions",
     link:  "views/responses.html",
-    modals: ["views/modal/responses.html"]
+    modals: ["views/modals/responses.html"]
   },
   {
     title: "Intrusions",

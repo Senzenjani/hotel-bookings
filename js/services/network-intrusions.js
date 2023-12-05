@@ -72,7 +72,7 @@ function populateNetworkIntrusionsTable(dataSet) {
 }
 
 function getAddResponsenBtn(data, type, row, metas) {
-    let dataFields = `data-id = "${data.network_event_id}"
+    let dataFields = `data-response-intrusion-id = "${data.intrusion_id}"
                       data-action-type = "add"`;
 
     return getButton(dataFields, "response", "success ", "fas fa-plus");
