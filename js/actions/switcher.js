@@ -7,6 +7,7 @@ import * as custodian from "../services/custodian.js";
 import * as device from "../services/devices.js";
 import * as event from "../services/event.js";
 import * as network_event from "../services/network-events.js";
+import * as intrusion from "../services/network-intrusions.js";
 
 const mainContent = "mainContent";
 const modalContent = "modalContent";
@@ -111,6 +112,9 @@ function loadOtherContent(state, index) {
                         break;
                     case "network_events":
                         network_event.fetchNetworkEvents();
+                        break;
+                    case "intrusions":
+                        intrusion.fetchIntrusions();
                         break
                 }
             }

@@ -32,7 +32,7 @@ export function addIntrusion(params) {
 
 
 function populateNetworkIntrusionsTable(dataSet) {
-    $("#networkIntrusionsTable").DataTable({
+    $("#intrusionsTable").DataTable({
         destroy: true,
         responsive: true,
         searching: true,
@@ -42,7 +42,7 @@ function populateNetworkIntrusionsTable(dataSet) {
         info: true,
         data: dataSet,
         columns: [
-            { data: "network_event_id" },
+            { data: "intrusion_id" },
             { data: "device_name" },
             { data: "event_name" },
             { data: "severity" },
@@ -50,25 +50,42 @@ function populateNetworkIntrusionsTable(dataSet) {
             { data: "source_ip" },
             { data: "dest_ip" },
             { data: "port" },
+            { data: "intrusion_description" },
             { data: "created_at" },
+            { data: null },
             { data: null }
         ],
         columnDefs: [
 
             {
-                render: getRecordResponsenBtn,
+                render: getAddResponsenBtn,
                 data: null,
-                targets: [9],
+                targets: [10],
+            },
+
+            {
+                render: getEditIntrusionBtn,
+                data: null,
+                targets: [11],
             }
         ],
     });
 }
 
-function getRecordResponsenBtn(data, type, row, metas) {
+function getAddResponsenBtn(data, type, row, metas) {
     let dataFields = `data-id = "${data.network_event_id}"
+                      data-action-type = "add"`;
+
+    return getButton(dataFields, "response", "success ", "fas fa-plus");
+}
+
+
+function getEditIntrusionBtn(data, type, row, metas) {
+    let dataFields = `data-intrusion-id = "${data.intrusion_id}"
+                      data-intrusion-description = "${data.intrusion_description}"
                       data-action-type = "edit"`;
 
-    return getButton(dataFields, "intrusion", "warning ", "fas fa-exclamation-triangle");
+    return getButton(dataFields, "intrusion", "warning ", "fas fa-edit");
 }
 
 function getButton(dataFields, modal, color, icon) {
