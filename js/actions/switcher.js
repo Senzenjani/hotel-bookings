@@ -66,7 +66,7 @@ function loadOtherContent(state, index) {
                 switch (state) {
 
                     case "bookings":
-                       // booking.fetchBookings();
+                        booking.fetchBookings();
                         break;
 
                 }
