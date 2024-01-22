@@ -2,7 +2,6 @@
 import { content_view } from "../app-views/content.js";
 import { links } from "../app-views/links.js";
 import { loadContent } from "../actions/contentLoader.js";
-import * as users from "../services/users.js";
 import * as booking from "../services/bookings.js";
 
 
@@ -16,7 +15,7 @@ $(document).ready(function () {
         loadLinks(sessionStorage.getItem("role"));
     }
 
-    $("#dashboard").on("click", function (e) {
+    $("#bookings").on("click", function (e) {
         selectContent("bookings");
     });
 
@@ -67,7 +66,7 @@ function loadOtherContent(state, index) {
                 switch (state) {
 
                     case "bookings":
-                        booking.fetchBookings();
+                       // booking.fetchBookings();
                         break;
 
                 }
