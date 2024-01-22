@@ -7,10 +7,11 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        let username = $('username').val();
-        let password = $('password').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
         
         user.login({username: username, password: password});
+        
     });
 
     $("#monit-home").on("click", function (e) {

@@ -1,5 +1,5 @@
 {
-    "apiURL": "restful-booker.herokuapp.com",
-    "apiPort": "",
-    "apiProtocol": "https"
+    "apiURL": "127.0.0.1",
+    "apiPort": "3000",
+    "apiProtocol": "http"
 }
