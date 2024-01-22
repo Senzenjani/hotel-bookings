@@ -3,12 +3,8 @@ import { content_view } from "../app-views/content.js";
 import { links } from "../app-views/links.js";
 import { loadContent } from "../actions/contentLoader.js";
 import * as users from "../services/users.js";
-import * as custodian from "../services/custodian.js";
-import * as device from "../services/devices.js";
-import * as event from "../services/event.js";
-import * as network_event from "../services/network-events.js";
-import * as intrusion from "../services/network-intrusions.js";
-import * as response from "../services/responses-actions.js";
+import * as booking from "../services/bookings.js";
+
 
 const mainContent = "mainContent";
 const modalContent = "modalContent";
@@ -21,36 +17,9 @@ $(document).ready(function () {
     }
 
     $("#dashboard").on("click", function (e) {
-        selectContent("dashboard");
+        selectContent("bookings");
     });
 
-    $("#response-actions").on("click", function (e) {
-        selectContent("response_actions");
-    });
-
-    $("#intrusions").on("click", function (e) {
-        selectContent("intrusions");
-    });
-
-    $("#network-events").on("click", function (e) {
-        selectContent("network_events");
-    });
-
-    $("#events").on("click", function (e) {
-        selectContent("events");
-    });
-
-    $("#devices").on("click", function (e) {
-        selectContent("devices");
-    });
-
-    $("#custodians").on("click", function (e) {
-        selectContent("custodians");
-    });
-
-    $("#users").on("click", function (e) {
-        selectContent("users");
-    });
 
 });
 
@@ -96,30 +65,11 @@ function loadOtherContent(state, index) {
                 let user_id = sessionStorage.getItem("user_id");
 
                 switch (state) {
-                    case "users":
-                        users.loadUsersTable(users.fetchUsers());
+
+                    case "bookings":
+                        booking.fetchBookings();
                         break;
-                    case "dashboard":
-                        //dashboard.loadDashboardData();
-                        break;
-                    case "custodians":
-                        custodian.fetchCustodians();
-                        break;
-                    case "devices":
-                        device.fetchDevices();
-                        break;
-                    case "events":
-                        event.fetchEvents();
-                        break;
-                    case "network_events":
-                        network_event.fetchNetworkEvents();
-                        break;
-                    case "intrusions":
-                        intrusion.fetchIntrusions();
-                        break;
-                    case "response_actions":
-                        response.fetchResponses();
-                        break
+
                 }
             }
         );

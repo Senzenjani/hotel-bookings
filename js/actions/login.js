@@ -9,9 +9,8 @@ $(document).ready(function () {
 
         let username = $('username').val();
         let password = $('password').val();
-        var formData = $(this).serialize();
         
-        user.login(formData );
+        user.login({username: username, password: password});
     });
 
     $("#monit-home").on("click", function (e) {

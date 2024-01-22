@@ -7,7 +7,7 @@ let token = sessionStorage.getItem("token");
 export function apiClient(path, type, dataType, async, cache, data) {
     let result = null
     $.ajax({
-        url: `${config.apiProtocol}://${config.apiURL}:${config.apiPort}${path}`,
+        url: `${config.apiProtocol}://${config.apiURL}${path}`,
         type: type,
         dataType: dataType,
         async: async,

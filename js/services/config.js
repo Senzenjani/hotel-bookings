@@ -5,6 +5,7 @@ export function getConfigs() {
         type: "post",
         dataType: "json",
         async: false,
+        contentType: "application/json",
 
         success: function (data) {
            configs = data
